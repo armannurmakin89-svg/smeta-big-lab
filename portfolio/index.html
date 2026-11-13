@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Учебное портфолио Армана</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <video id="video-background" autoplay muted loop playsinline preload="metadata" poster="cyberpunk-background.jpg" aria-hidden="true" tabindex="-1">
+    <source src="animated-background.mp4" type="video/mp4">
+  </video>
+  <canvas id="pixel-background" aria-hidden="true"></canvas>
+  <header class="site-header">
+    <nav class="navigation" aria-label="Основная навигация">
+      <a href="#about">Обо мне</a>
+      <a href="#projects">Проекты</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section id="about" class="profile">
+      <img class="profile-art" src="samurai.png" alt="Самурай в неоновых фиолетовых тонах">
+      <h1>Учебное портфолио Армана</h1>
+      <p id="greeting">Привет!</p>
+      <button id="hello" type="button">Поздороваться</button>
+      <p>Это учебный пример портфолио. Здесь я практикую создание сайтов.</p>
+      <h2>Навыки</h2>
+      <ul class="skills">
+        <li class="tag">HTML</li>
+        <li class="tag">CSS</li>
+        <li class="tag tag-accent">JavaScript</li>
+      </ul>
+      <a href="#projects">Посмотреть проекты</a>
+    </section>
+
+    <section id="projects">
+      <h2>Проекты</h2>
+      <article class="project-card">
+        <div class="project-preview">ALMA</div>
+        <div class="project-copy">
+          <h3>ALMA — учебный проект</h3>
+          <p>Пример сайта для практики HTML, CSS и JavaScript.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="contacts">
+      <h2>Контакты</h2>
+      <p>Пример адреса электронной почты: example@example.com</p>
+      <button id="contact-button" type="button" aria-controls="contact-form" aria-expanded="false">Показать учебную форму</button>
+      <form id="contact-form" autocomplete="off" aria-describedby="contact-note" hidden>
+        <p id="contact-note">Это учебная форма: она ничего не отправляет и не сохраняет. Используйте только вымышленные данные.</p>
+        <label for="practice-message">Учебное сообщение</label>
+        <input id="practice-message" type="text" placeholder="Пример сообщения" autocomplete="off">
+      </form>
+    </section>
+  </main>
+</body>
+</html>
