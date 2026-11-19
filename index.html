@@ -61,9 +61,35 @@
       </div>
     </section>
 
-    <section class="total" aria-live="polite" aria-atomic="true">
-      <p class="total-label">Итого к оплате</p>
-      <p class="total-value" id="grand-total">0 ₸</p>
+    <section class="card" aria-labelledby="calc-title">
+      <h2 id="calc-title">Расчёт</h2>
+      <div class="fields fields-calc">
+        <label class="field" for="discount">
+          Скидка, %
+          <input id="discount" name="discount" type="text" inputmode="decimal" autocomplete="off" placeholder="0">
+        </label>
+        <label class="field" for="vat">
+          НДС, %
+          <input id="vat" name="vat" type="text" inputmode="decimal" autocomplete="off" placeholder="0">
+        </label>
+        <label class="field" for="currency">
+          Валюта
+          <select id="currency" name="currency">
+            <option value="₸" selected>₸ тенге</option>
+            <option value="₽">₽ рубль</option>
+            <option value="$">$ доллар</option>
+            <option value="€">€ евро</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="result" aria-live="polite" aria-atomic="true">
+      <div id="breakdown" class="breakdown" hidden></div>
+      <div class="total">
+        <p class="total-label">Итого к оплате</p>
+        <p class="total-value" id="grand-total">0 ₸</p>
+      </div>
     </section>
   </main>
   <script src="script.js"></script>

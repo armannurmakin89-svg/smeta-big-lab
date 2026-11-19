@@ -4,7 +4,12 @@
   var grandTotal = document.getElementById("grand-total");
   var emptyNote = document.getElementById("empty-note");
   var dateInput = document.getElementById("date");
+  var discountInput = document.getElementById("discount");
+  var vatInput = document.getElementById("vat");
+  var currencySelect = document.getElementById("currency");
+  var breakdown = document.getElementById("breakdown");
   var rowCount = 0;
+  var currencies = { "₸": true, "₽": true, "$": true, "€": true };
 
   function todayValue() {
     var now = new Date();
@@ -22,14 +27,53 @@
     return Number.isFinite(value) ? value : 0;
   }
 
+  function currentCurrency() {
+    var value = currencySelect ? currencySelect.value : "₸";
+    return currencies[value] ? value : "₸";
+  }
+
+  function formatPercent(value) {
+    var number = Number.isFinite(value) ? value : 0;
+    var text = String(Math.round(number * 100) / 100);
+    if (text.indexOf(".") !== -1) {
+      text = text.replace(/0+$/, "").replace(/\.$/, "");
+    }
+    return text.replace(".", ",");
+  }
+
   function formatMoney(value) {
     var amount = Number.isFinite(value) ? value : 0;
     var negative = amount < 0;
-    var rounded = Math.round(Math.abs(amount) * 100) / 100;
-    var parts = rounded.toFixed(2).split(".");
-    var whole = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-    var text = parts[1] === "00" ? whole : whole + "," + parts[1];
-    return (negative ? "−" : "") + text + " ₸";
+    var whole = String(Math.round(Math.abs(amount))).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    return (negative ? "−" : "") + whole + " " + currentCurrency();
+  }
+
+  function percentOf(base, percent) {
+    if (!Number.isFinite(base) || !Number.isFinite(percent)) {
+      return 0;
+    }
+    return Math.round(base * percent / 100);
+  }
+
+  function renderBreakdown(lines) {
+    breakdown.innerHTML = "";
+    if (lines.length === 0) {
+      breakdown.hidden = true;
+      return;
+    }
+    breakdown.hidden = false;
+    lines.forEach(function (line) {
+      var row = document.createElement("div");
+      row.className = "breakdown-row";
+      var label = document.createElement("span");
+      label.textContent = line.label;
+      var value = document.createElement("span");
+      value.className = "breakdown-value";
+      value.textContent = formatMoney(line.amount);
+      row.appendChild(label);
+      row.appendChild(value);
+      breakdown.appendChild(row);
+    });
   }
 
   function updateEmptyNote() {
@@ -37,20 +81,48 @@
   }
 
   function recalc() {
-    var total = 0;
+    var subtotal = 0;
     Array.prototype.forEach.call(rows.querySelectorAll("tr"), function (row) {
       var qty = parseNumber(row.querySelector('[name="qty"]').value);
       var price = parseNumber(row.querySelector('[name="price"]').value);
-      var sum = qty * price;
+      var sum = Math.round(qty * price);
       if (!Number.isFinite(sum)) {
         sum = 0;
       }
       row.querySelector(".line-sum").textContent = formatMoney(sum);
-      total += sum;
+      subtotal += sum;
     });
+    if (!Number.isFinite(subtotal)) {
+      subtotal = 0;
+    }
+
+    var discountPercent = parseNumber(discountInput.value);
+    var vatPercent = parseNumber(vatInput.value);
+    var discountAmount = percentOf(subtotal, discountPercent);
+    var afterDiscount = subtotal - discountAmount;
+    var vatAmount = percentOf(afterDiscount, vatPercent);
+    var total = afterDiscount + vatAmount;
     if (!Number.isFinite(total)) {
       total = 0;
     }
+
+    var lines = [];
+    if (subtotal !== 0) {
+      lines.push({ label: "Сумма позиций", amount: subtotal });
+    }
+    if (discountAmount !== 0) {
+      lines.push({
+        label: "Скидка " + formatPercent(discountPercent) + "%",
+        amount: -discountAmount
+      });
+    }
+    if (vatAmount !== 0) {
+      lines.push({
+        label: "НДС " + formatPercent(vatPercent) + "%",
+        amount: vatAmount
+      });
+    }
+    renderBreakdown(lines);
     grandTotal.textContent = formatMoney(total);
     updateEmptyNote();
   }
@@ -76,7 +148,7 @@
       '<td data-label="Цена">' +
         '<input type="text" name="price" inputmode="decimal" aria-label="Цена, позиция ' + index + '" autocomplete="off" placeholder="0">' +
       "</td>" +
-      '<td class="line-sum" data-label="Сумма">0 ₸</td>' +
+      '<td class="line-sum" data-label="Сумма">' + formatMoney(0) + "</td>" +
       '<td data-label="Удалить">' +
         '<button type="button" class="delete">Удалить</button>' +
       "</td>";
@@ -92,6 +164,18 @@
   });
 
   rows.addEventListener("input", function () {
+    recalc();
+  });
+
+  discountInput.addEventListener("input", function () {
+    recalc();
+  });
+
+  vatInput.addEventListener("input", function () {
+    recalc();
+  });
+
+  currencySelect.addEventListener("change", function () {
     recalc();
   });
 
