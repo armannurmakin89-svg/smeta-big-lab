@@ -1,0 +1,298 @@
+:root {
+  --bg: #f3efe6;
+  --paper: #fffdf8;
+  --ink: #1c1915;
+  --muted: #5e574c;
+  --line: #e3dacb;
+  --accent: #1e4a38;
+  --accent-ink: #ffffff;
+  --danger: #8d2e2e;
+  --danger-bg: #f8ecec;
+  --shadow: 0 10px 30px rgba(48, 36, 18, 0.06);
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background: var(--bg);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.page {
+  width: min(960px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 48px;
+}
+
+.intro h1 {
+  margin: 0 0 8px;
+  font-size: 2rem;
+  line-height: 1.15;
+}
+
+.intro p {
+  margin: 0 0 24px;
+  color: var(--muted);
+}
+
+.card {
+  margin-bottom: 16px;
+  padding: 20px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+}
+
+input,
+select,
+button {
+  font: inherit;
+  color: inherit;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 44px;
+  font-weight: 400;
+  padding: 8px 12px;
+  background: #fff;
+  border: 1px solid #cfc6b6;
+  border-radius: 10px;
+}
+
+input:focus,
+select:focus,
+button:focus-visible {
+  outline: 3px solid #1e4a38;
+  outline-offset: 2px;
+}
+
+.button,
+.delete {
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.button {
+  border: 0;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.button:hover {
+  background: #16392b;
+}
+
+.empty-note {
+  margin: 0;
+  color: var(--muted);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  padding: 8px 8px 10px;
+  text-align: left;
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+td {
+  padding: 6px 8px;
+  vertical-align: middle;
+}
+
+td input,
+td select {
+  min-width: 0;
+}
+
+.line-sum {
+  min-width: 7.5rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.delete {
+  border: 1px solid #e4c8c8;
+  background: var(--danger-bg);
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.delete:hover {
+  background: #f3dddd;
+}
+
+.total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: var(--radius);
+}
+
+.total-label,
+.total-value {
+  margin: 0;
+}
+
+.total-label {
+  font-size: 1.05rem;
+}
+
+.total-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .page {
+    width: min(100% - 20px, 960px);
+    padding-top: 20px;
+  }
+
+  .intro h1 {
+    font-size: 1.6rem;
+  }
+
+  .fields,
+  .section-head {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .section-head .button {
+    width: 100%;
+  }
+
+  .table-wrap {
+    overflow: visible;
+  }
+
+  table,
+  tbody,
+  tr,
+  td {
+    display: block;
+    width: 100%;
+  }
+
+  thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  tbody tr {
+    margin-bottom: 12px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+  }
+
+  td {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+  }
+
+  td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .line-sum {
+    min-height: 44px;
+  }
+
+  td:last-child {
+    grid-template-columns: 1fr;
+  }
+
+  td:last-child::before {
+    content: none;
+  }
+
+  .delete {
+    width: 100%;
+  }
+
+  .total {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+}

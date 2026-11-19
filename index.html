@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Смета за 5 минут</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <header class="intro">
+      <h1>Смета за 5 минут</h1>
+      <p>Заполните реквизиты и позиции. Суммы пересчитаются сами.</p>
+    </header>
+
+    <section class="card" aria-labelledby="details-title">
+      <h2 id="details-title">Реквизиты</h2>
+      <div class="fields">
+        <label class="field" for="from">
+          От кого
+          <input id="from" name="from" type="text" autocomplete="organization" placeholder="Название или имя">
+        </label>
+        <label class="field" for="to">
+          Для кого
+          <input id="to" name="to" type="text" autocomplete="organization" placeholder="Клиент или компания">
+        </label>
+        <label class="field" for="number">
+          Номер сметы
+          <input id="number" name="number" type="text" inputmode="text" placeholder="Например, 12">
+        </label>
+        <label class="field" for="date">
+          Дата
+          <input id="date" name="date" type="date" required>
+        </label>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="items-title">
+      <div class="section-head">
+        <h2 id="items-title">Позиции</h2>
+        <button type="button" id="add-row" class="button">+ Добавить позицию</button>
+      </div>
+
+      <p id="empty-note" class="empty-note" hidden>Позиций пока нет. Нажмите «Добавить позицию».</p>
+
+      <div class="table-wrap">
+        <table>
+          <caption class="visually-hidden">Позиции сметы</caption>
+          <thead>
+            <tr>
+              <th scope="col">Наименование</th>
+              <th scope="col">Количество</th>
+              <th scope="col">Единица</th>
+              <th scope="col">Цена</th>
+              <th scope="col">Сумма</th>
+              <th scope="col"><span class="visually-hidden">Действие</span></th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="total" aria-live="polite" aria-atomic="true">
+      <p class="total-label">Итого к оплате</p>
+      <p class="total-value" id="grand-total">0 ₸</p>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
