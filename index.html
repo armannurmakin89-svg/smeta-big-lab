@@ -91,6 +91,24 @@
         <p class="total-value" id="grand-total">0 ₸</p>
       </div>
     </section>
+
+    <section class="card comment-card" id="comment-card" aria-labelledby="comment-title">
+      <h2 id="comment-title">Комментарий</h2>
+      <label class="field comment-field" for="comment">
+        <span class="visually-hidden">Комментарий к смете</span>
+        <textarea id="comment" name="comment" rows="3" placeholder="Сроки, условия оплаты, гарантия"></textarea>
+      </label>
+      <p id="comment-print" class="print-only comment-print"></p>
+    </section>
+
+    <div class="signature print-only">
+      <span>Подпись: ____________________</span>
+      <span>Дата: ____________________</span>
+    </div>
+
+    <div class="actions">
+      <button type="button" id="save-pdf" class="button">Сохранить PDF</button>
+    </div>
   </main>
   <script src="script.js"></script>
 </body>

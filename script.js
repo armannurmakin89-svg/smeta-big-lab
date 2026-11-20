@@ -8,6 +8,10 @@
   var vatInput = document.getElementById("vat");
   var currencySelect = document.getElementById("currency");
   var breakdown = document.getElementById("breakdown");
+  var commentInput = document.getElementById("comment");
+  var commentPrint = document.getElementById("comment-print");
+  var commentCard = document.getElementById("comment-card");
+  var savePdfButton = document.getElementById("save-pdf");
   var rowCount = 0;
   var currencies = { "₸": true, "₽": true, "$": true, "€": true };
 
@@ -115,6 +119,7 @@
         label: "Скидка " + formatPercent(discountPercent) + "%",
         amount: -discountAmount
       });
+      lines.push({ label: "Сумма со скидкой", amount: afterDiscount });
     }
     if (vatAmount !== 0) {
       lines.push({
@@ -178,6 +183,23 @@
   currencySelect.addEventListener("change", function () {
     recalc();
   });
+
+  function updateCommentPrint() {
+    var text = commentInput.value.trim();
+    commentPrint.textContent = text;
+    commentCard.classList.toggle("is-empty", text === "");
+  }
+
+  commentInput.addEventListener("input", function () {
+    updateCommentPrint();
+  });
+
+  savePdfButton.addEventListener("click", function () {
+    updateCommentPrint();
+    window.print();
+  });
+
+  updateCommentPrint();
 
   rows.addEventListener("click", function (event) {
     var button = event.target.closest("button.delete");

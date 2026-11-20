@@ -236,6 +236,43 @@ td select {
   font-variant-numeric: tabular-nums;
 }
 
+textarea {
+  width: 100%;
+  min-height: 88px;
+  padding: 10px 12px;
+  font: inherit;
+  font-weight: 400;
+  color: inherit;
+  background: #fff;
+  border: 1px solid #cfc6b6;
+  border-radius: 10px;
+  resize: vertical;
+}
+
+textarea:focus {
+  outline: 3px solid #1e4a38;
+  outline-offset: 2px;
+}
+
+.comment-card {
+  margin-top: 16px;
+}
+
+.comment-field {
+  margin-top: 12px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.print-only {
+  display: none;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -332,5 +369,124 @@ td select {
     align-items: flex-start;
     flex-direction: column;
     gap: 4px;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
+  body {
+    background: #fff;
+    font-size: 12pt;
+  }
+
+  .page {
+    width: 100%;
+    padding: 0;
+  }
+
+  .intro p,
+  .actions,
+  #add-row,
+  .empty-note,
+  .delete,
+  th:last-child,
+  td:last-child,
+  .comment-field,
+  .comment-card.is-empty,
+  section[aria-labelledby="calc-title"] {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block;
+  }
+
+  .card,
+  .breakdown {
+    background: #fff;
+    box-shadow: none;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    margin-bottom: 12pt;
+  }
+
+  .fields,
+  .fields-calc {
+    grid-template-columns: 1fr 1fr;
+    gap: 6pt 16pt;
+    margin-top: 6pt;
+  }
+
+  input,
+  select {
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  input::placeholder {
+    color: transparent;
+  }
+
+  input:focus,
+  select:focus {
+    outline: none;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  table {
+    border: 1px solid #999;
+  }
+
+  th,
+  td {
+    border: 1px solid #999;
+    padding: 4pt 6pt;
+  }
+
+  .breakdown-row {
+    min-height: 0;
+    padding: 3pt 0;
+  }
+
+  .total {
+    color: #000;
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 0;
+    padding: 8pt 10pt;
+  }
+
+  .total-value {
+    font-size: 16pt;
+  }
+
+  .comment-print {
+    margin: 6pt 0 0;
+    white-space: pre-wrap;
+  }
+
+  .signature {
+    display: flex;
+    justify-content: space-between;
+    gap: 24pt;
+    margin-top: 32pt;
+  }
+
+  .result,
+  .card,
+  tr {
+    break-inside: avoid;
   }
 }
