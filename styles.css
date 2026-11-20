@@ -174,7 +174,15 @@ td select {
 }
 
 .fields-calc {
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.payment {
+  padding: 4px 20px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
 .result {
@@ -427,7 +435,8 @@ textarea:focus {
   }
 
   .card,
-  .breakdown {
+  .breakdown,
+  .payment {
     background: #fff;
     box-shadow: none;
     border: 0;

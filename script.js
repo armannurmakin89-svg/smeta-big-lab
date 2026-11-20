@@ -10,6 +10,11 @@
   var discountInput = document.getElementById("discount");
   var vatInput = document.getElementById("vat");
   var currencySelect = document.getElementById("currency");
+  var prepayInput = document.getElementById("prepay");
+  var payment = document.getElementById("payment");
+  var prepayLabel = document.getElementById("prepay-label");
+  var prepayAmountEl = document.getElementById("prepay-amount");
+  var restAmountEl = document.getElementById("rest-amount");
   var breakdown = document.getElementById("breakdown");
   var commentInput = document.getElementById("comment");
   var commentPrint = document.getElementById("comment-print");
@@ -158,9 +163,31 @@
     }
     renderBreakdown(lines);
     grandTotal.textContent = formatMoney(total);
+
+    var prepayPercent = Math.min(Math.max(parseNumber(prepayInput.value), 0), 100);
+    var prepayAmount = percentOf(total, prepayPercent);
+    var restAmount = total - prepayAmount;
+    var prepayLabelText = "Предоплата " + formatPercent(prepayPercent) + "%";
+    if (prepayAmount !== 0) {
+      prepayLabel.textContent = prepayLabelText;
+      prepayAmountEl.textContent = formatMoney(prepayAmount);
+      restAmountEl.textContent = formatMoney(restAmount);
+      payment.hidden = false;
+    } else {
+      payment.hidden = true;
+    }
     updateEmptyNote();
 
-    lastCalc = { items: items, lines: lines, total: total };
+    lastCalc = {
+      items: items,
+      lines: lines,
+      total: total,
+      prepay: prepayAmount === 0 ? null : {
+        label: prepayLabelText,
+        amount: prepayAmount,
+        rest: restAmount
+      }
+    };
     return lastCalc;
   }
 
@@ -216,6 +243,7 @@
       date: dateInput.value,
       discount: discountInput.value,
       vat: vatInput.value,
+      prepay: prepayInput.value,
       currency: currentCurrency(),
       comment: commentInput.value,
       rows: Array.prototype.map.call(rows.querySelectorAll("tr"), function (row) {
@@ -253,6 +281,7 @@
     dateInput.value = state.date || todayValue();
     discountInput.value = state.discount || "";
     vatInput.value = state.vat || "";
+    prepayInput.value = state.prepay || "";
     currencySelect.value = currencies[state.currency] ? state.currency : "₸";
     commentInput.value = state.comment || "";
     rows.innerHTML = "";
@@ -284,7 +313,7 @@
   }
 
   function startNewEstimate() {
-    var ok = window.confirm("Начать новую смету? Позиции, клиент, скидка, НДС и комментарий будут очищены.");
+    var ok = window.confirm("Начать новую смету? Позиции, клиент, скидка, НДС, предоплата и комментарий будут очищены.");
     if (!ok) {
       return;
     }
@@ -295,6 +324,7 @@
       date: todayValue(),
       discount: "",
       vat: "",
+      prepay: "",
       currency: currentCurrency(),
       comment: "",
       rows: []
@@ -342,6 +372,10 @@
       parts.push(line.label + ": " + formatMoney(line.amount));
     });
     parts.push("*Итого к оплате: " + formatMoney(calc.total) + "*");
+    if (calc.prepay) {
+      parts.push(calc.prepay.label + ": " + formatMoney(calc.prepay.amount));
+      parts.push("Остаток к оплате: " + formatMoney(calc.prepay.rest));
+    }
 
     var comment = commentInput.value.trim();
     if (comment) {

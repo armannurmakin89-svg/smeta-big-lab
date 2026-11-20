@@ -72,6 +72,10 @@
           НДС, %
           <input id="vat" name="vat" type="text" inputmode="decimal" autocomplete="off" placeholder="0">
         </label>
+        <label class="field" for="prepay">
+          Предоплата, %
+          <input id="prepay" name="prepay" type="text" inputmode="decimal" autocomplete="off" placeholder="0">
+        </label>
         <label class="field" for="currency">
           Валюта
           <select id="currency" name="currency">
@@ -89,6 +93,16 @@
       <div class="total">
         <p class="total-label">Итого к оплате</p>
         <p class="total-value" id="grand-total">0 ₸</p>
+      </div>
+      <div id="payment" class="payment" hidden>
+        <div class="breakdown-row">
+          <span id="prepay-label">Предоплата</span>
+          <span class="breakdown-value" id="prepay-amount">0 ₸</span>
+        </div>
+        <div class="breakdown-row">
+          <span>Остаток к оплате</span>
+          <span class="breakdown-value" id="rest-amount">0 ₸</span>
+        </div>
       </div>
     </section>
 
