@@ -273,6 +273,26 @@ textarea:focus {
   display: none;
 }
 
+.button-secondary {
+  background: #fff;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.button-secondary:hover {
+  background: #eef3ef;
+}
+
+.copy-status {
+  align-self: center;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.copy-fallback {
+  margin-top: 16px;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -397,6 +417,7 @@ textarea:focus {
   td:last-child,
   .comment-field,
   .comment-card.is-empty,
+  .copy-fallback,
   section[aria-labelledby="calc-title"] {
     display: none !important;
   }

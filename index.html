@@ -108,6 +108,16 @@
 
     <div class="actions">
       <button type="button" id="save-pdf" class="button">Сохранить PDF</button>
+      <button type="button" id="copy-whatsapp" class="button button-secondary">Скопировать для WhatsApp</button>
+      <button type="button" id="new-estimate" class="button button-secondary">Новая смета</button>
+      <span id="copy-status" class="copy-status" role="status" aria-live="polite"></span>
+    </div>
+
+    <div id="copy-fallback" class="card copy-fallback" hidden>
+      <label class="field" for="copy-text">
+        Скопируйте текст вручную (Ctrl + C)
+        <textarea id="copy-text" rows="10" readonly></textarea>
+      </label>
     </div>
   </main>
   <script src="script.js"></script>
